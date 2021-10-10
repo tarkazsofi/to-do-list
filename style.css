@@ -22,3 +22,12 @@ footer {
 .logo {
   height: 75%;
 }
+.to-do-items li.completed img:nth-child(1) {
+  display: none;
+}
+.to-do-items li.pending img:nth-child(2) {
+  display: none;
+}
+.to-do-items li.completed span {
+  text-decoration: line-through;
+}

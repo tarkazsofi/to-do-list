@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
 html,
 body {
   height: 100%;
@@ -6,6 +7,7 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Inter", sans-serif;
 }
 body {
   display: grid;
@@ -35,7 +37,7 @@ footer {
   display: flex;
 }
 .main-inner-wrapper {
-  max-width: 480px;
+  width: 480px;
 }
 main {
   display: flex;
@@ -52,6 +54,7 @@ main {
   padding-inline: 8px;
 }
 .new-to-do {
+  gap: 8px;
   display: flex;
 }
 .new-to-do input {
@@ -63,8 +66,14 @@ main {
 .to-do-items li img {
   height: 24px;
 }
-.to-do-items li {
+.to-do-items li button {
   display: flex;
   align-items: center;
   margin-top: 8px;
+  background-color: transparent;
+  border: 0;
+  padding-right: 4px;
+}
+.new-to-do input {
+  padding-inline: 8px;
 }

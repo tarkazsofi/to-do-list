@@ -31,3 +31,40 @@ footer {
 .to-do-items li.completed span {
   text-decoration: line-through;
 }
+.new-to-do {
+  display: flex;
+}
+.main-inner-wrapper {
+  max-width: 480px;
+}
+main {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+.new-to-do button img {
+  height: 24px;
+}
+.new-to-do button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-inline: 8px;
+}
+.new-to-do {
+  display: flex;
+}
+.new-to-do input {
+  flex-grow: 1;
+}
+.to-do-items {
+  list-style-type: none;
+}
+.to-do-items li img {
+  height: 24px;
+}
+.to-do-items li {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}

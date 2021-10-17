@@ -1,22 +1,8 @@
-const toDoItems = [
-  {
-    timestamp: 1,
-    text: "Eat something",
-    completed: true,
-  },
-  {
-    timestamp: 2,
-    text: "Practice coding",
-    completed: false,
-  },
-  {
-    timestamp: 3,
-    text: "Save the world",
-    completed: false,
-  },
-];
+const toDoItems = [];
 
 const toDoItemsContainer = document.querySelector(".to-do-items");
+const newToDoItemInput = document.querySelector(".new-to-do input");
+const addToDoItemButton = document.querySelector(".new-to-do button");
 
 const generateToDoHtml = (toDoItem) => {
   return `
@@ -35,3 +21,14 @@ const renderToDoItems = () => {
 };
 
 renderToDoItems();
+
+addToDoItemButton.addEventListener("click", () => {
+  const newToDoItem = {
+    timestamp: Date.now(),
+    text: newToDoItemInput.value,
+    completed: false,
+  };
+  toDoItems.push(newToDoItem);
+  renderToDoItems();
+  newToDoItemInput.value = "";
+});

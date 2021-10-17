@@ -46,4 +46,5 @@ addToDoItemButton.addEventListener("click", () => {
   };
   toDoItems.push(newToDoItem);
   renderToDoItems();
+  newToDoItemInput.value = "";
 });

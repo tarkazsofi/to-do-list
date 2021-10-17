@@ -17,6 +17,8 @@ const toDoItems = [
 ];
 
 const toDoItemsContainer = document.querySelector(".to-do-items");
+const newToDoItemInput = document.querySelector(".new-to-do input");
+const addToDoItemButton = document.querySelector(".new-to-do button");
 
 const generateToDoHtml = (toDoItem) => {
   return `
@@ -35,3 +37,12 @@ const renderToDoItems = () => {
 };
 
 renderToDoItems();
+
+addToDoItemButton.addEventListener("click", () => {
+  const newToDoItem = {
+    timestamp: Date.now(),
+    text: newToDoItemInput.value,
+    completed: false,
+  };
+  toDoItems.push(newToDoItem);
+});

@@ -20,9 +20,7 @@ const renderToDoItems = () => {
   toDoItemsContainer.innerHTML = toDoItems.map(generateToDoHtml).join("");
 };
 
-renderToDoItems();
-
-addToDoItemButton.addEventListener("click", () => {
+const addToDoItem = () => {
   const newToDoItem = {
     timestamp: Date.now(),
     text: newToDoItemInput.value,
@@ -31,4 +29,13 @@ addToDoItemButton.addEventListener("click", () => {
   toDoItems.push(newToDoItem);
   renderToDoItems();
   newToDoItemInput.value = "";
+};
+
+renderToDoItems();
+
+addToDoItemButton.addEventListener("click", addToDoItem);
+newToDoItemInput.addEventListener("keyup", (event) => {
+  if (event.key === "Enter") {
+    addToDoItem();
+  }
 });

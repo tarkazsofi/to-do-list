@@ -7,7 +7,7 @@ const addToDoItemButton = document.querySelector(".new-to-do button");
 const generateToDoHtml = (toDoItem) => {
   return `
     <li class="${toDoItem.completed ? "completed" : "pending"}">
-      <button>
+      <button data-toggle="${toDoItem.timestamp}">
         <img src="./icons/square.svg" alt="unchecked" />
         <img src="./icons/check-square.svg" alt="checked" />
         <span>${toDoItem.text}</span>

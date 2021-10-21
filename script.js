@@ -16,9 +16,20 @@ const generateToDoHtml = (toDoItem) => {
     </li>
   `;
 };
-
+const isCompleted = (toDoItem) => {
+  return toDoItem.completed;
+};
+const isPending = (toDoItem) => {
+  return !toDoItem.completed;
+};
 const renderToDoItems = () => {
-  toDoItemsContainer.innerHTML = toDoItems.map(generateToDoHtml).join("");
+  const pendingToDoItems = toDoItems.filter(isPending);
+  const completedToDoItems = toDoItems.filter(isCompleted);
+  const pendingToDoItemsHtml = pendingToDoItems.map(generateToDoHtml).join("");
+  const completedToDoItemsHtml = completedToDoItems
+    .map(generateToDoHtml)
+    .join("");
+  toDoItemsContainer.innerHTML = `${pendingToDoItemsHtml}${completedToDoItemsHtml}`;
 };
 
 const addToDoItem = () => {

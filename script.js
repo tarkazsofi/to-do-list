@@ -16,9 +16,20 @@ const generateToDoHtml = (toDoItem) => {
     </li>
   `;
 };
-
+const isCompleted = (toDoItem) => {
+  return toDoItem.completed;
+};
+const isPending = (toDoItem) => {
+  return !toDoItem.completed;
+};
 const renderToDoItems = () => {
-  toDoItemsContainer.innerHTML = toDoItems.map(generateToDoHtml).join("");
+  const pendingToDoItems = toDoItems.filter(isPending);
+  const completedToDoItems = toDoItems.filter(isCompleted);
+  const pendingToDoItemsHtml = pendingToDoItems.map(generateToDoHtml).join("");
+  const completedToDoItemsHtml = completedToDoItems
+    .map(generateToDoHtml)
+    .join("");
+  toDoItemsContainer.innerHTML = `${pendingToDoItemsHtml}${completedToDoItemsHtml}`;
 };
 
 const addToDoItem = () => {
@@ -44,17 +55,19 @@ toDoItemsList.addEventListener("click", (event) => {
   const clickedButton = event.path.find(
     (element) => element.nodeName === "BUTTON"
   );
-  const clickedTimestamp = Number(clickedButton.dataset.toggle);
-  toDoItems = toDoItems.map((toDoItem) => {
-    if (toDoItem.timestamp === clickedTimestamp) {
-      return {
-        timestamp: toDoItem.timestamp,
-        text: toDoItem.text,
-        completed: !toDoItem.completed,
-      };
-    } else {
-      return toDoItem;
-    }
-  });
-  renderToDoItems();
+  if (clickedButton !== undefined) {
+    const clickedTimestamp = Number(clickedButton.dataset.toggle);
+    toDoItems = toDoItems.map((toDoItem) => {
+      if (toDoItem.timestamp === clickedTimestamp) {
+        return {
+          timestamp: toDoItem.timestamp,
+          text: toDoItem.text,
+          completed: !toDoItem.completed,
+        };
+      } else {
+        return toDoItem;
+      }
+    });
+    renderToDoItems();
+  }
 });

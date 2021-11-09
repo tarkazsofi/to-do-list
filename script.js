@@ -9,9 +9,12 @@ const generateToDoHtml = (toDoItem) => {
   return `
     <li class="${toDoItem.completed ? "completed" : "pending"}">
       <button data-toggle="${toDoItem.timestamp}">
-        <img src="./icons/square.svg" alt="unchecked" />
-        <img src="./icons/check-square.svg" alt="checked" />
+        <img class="unchecked" src="./icons/square.svg" alt="unchecked" />
+        <img class="checked" src="./icons/check-square.svg" alt="checked" />
         <span>${toDoItem.text}</span>
+      </button>
+      <button data-delete="${toDoItem.timestamp}">
+        <img src="./icons/trash.svg" alt="delete" />
       </button>
     </li>
   `;
@@ -56,18 +59,27 @@ toDoItemsList.addEventListener("click", (event) => {
     (element) => element.nodeName === "BUTTON"
   );
   if (clickedButton !== undefined) {
-    const clickedTimestamp = Number(clickedButton.dataset.toggle);
-    toDoItems = toDoItems.map((toDoItem) => {
-      if (toDoItem.timestamp === clickedTimestamp) {
-        return {
-          timestamp: toDoItem.timestamp,
-          text: toDoItem.text,
-          completed: !toDoItem.completed,
-        };
-      } else {
-        return toDoItem;
-      }
-    });
+    if (clickedButton.dataset.toggle) {
+      const clickedToggleTimestamp = Number(clickedButton.dataset.toggle);
+      toDoItems = toDoItems.map((toDoItem) => {
+        if (toDoItem.timestamp === clickedToggleTimestamp) {
+          return {
+            timestamp: toDoItem.timestamp,
+            text: toDoItem.text,
+            completed: !toDoItem.completed,
+          };
+        } else {
+          return toDoItem;
+        }
+      });
+    }
+    if (clickedButton.dataset.delete) {
+      const clickedDeleteTimestamp = Number(clickedButton.dataset.delete);
+      toDoItems = toDoItems.filter((toDoItem) => {
+        return toDoItem.timestamp !== clickedDeleteTimestamp;
+      });
+    }
+
     renderToDoItems();
   }
 });

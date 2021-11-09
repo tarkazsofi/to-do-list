@@ -59,18 +59,27 @@ toDoItemsList.addEventListener("click", (event) => {
     (element) => element.nodeName === "BUTTON"
   );
   if (clickedButton !== undefined) {
-    const clickedTimestamp = Number(clickedButton.dataset.toggle);
-    toDoItems = toDoItems.map((toDoItem) => {
-      if (toDoItem.timestamp === clickedTimestamp) {
-        return {
-          timestamp: toDoItem.timestamp,
-          text: toDoItem.text,
-          completed: !toDoItem.completed,
-        };
-      } else {
-        return toDoItem;
-      }
-    });
+    if (clickedButton.dataset.toggle) {
+      const clickedToggleTimestamp = Number(clickedButton.dataset.toggle);
+      toDoItems = toDoItems.map((toDoItem) => {
+        if (toDoItem.timestamp === clickedToggleTimestamp) {
+          return {
+            timestamp: toDoItem.timestamp,
+            text: toDoItem.text,
+            completed: !toDoItem.completed,
+          };
+        } else {
+          return toDoItem;
+        }
+      });
+    }
+    if (clickedButton.dataset.delete) {
+      const clickedDeleteTimestamp = Number(clickedButton.dataset.delete);
+      toDoItems = toDoItems.filter((toDoItem) => {
+        return toDoItem.timestamp !== clickedDeleteTimestamp;
+      });
+    }
+
     renderToDoItems();
   }
 });

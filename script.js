@@ -27,7 +27,7 @@ const generateToDoHtml = (toDoItem) => {
   } else {
     return `
       <li>
-        <input value="${toDoItem.text}" />
+        <input value="${toDoItem.text}" data-input="${toDoItem.timestamp}" />
         <div class="tools">
           <button data-save="${toDoItem.timestamp}">
             <img src="./icons/check.svg" alt="save" />
@@ -124,6 +124,24 @@ toDoItemsList.addEventListener("click", (event) => {
           return {
             timestamp: toDoItem.timestamp,
             text: toDoItem.text,
+            completed: toDoItem.completed,
+            editing: false,
+          };
+        } else {
+          return toDoItem;
+        }
+      });
+    }
+    if (clickedButton.dataset.save) {
+      const clickedSaveTimestamp = Number(clickedButton.dataset.save);
+      const editingInput = document.querySelector(
+        `input[data-input="${clickedSaveTimestamp}"]`
+      );
+      toDoItems = toDoItems.map((toDoItem) => {
+        if (toDoItem.timestamp === clickedSaveTimestamp) {
+          return {
+            timestamp: toDoItem.timestamp,
+            text: editingInput.value,
             completed: toDoItem.completed,
             editing: false,
           };

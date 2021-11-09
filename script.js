@@ -6,23 +6,39 @@ const addToDoItemButton = document.querySelector(".new-to-do button");
 const toDoItemsList = document.querySelector(".to-do-items");
 
 const generateToDoHtml = (toDoItem) => {
-  return `
-    <li class="${toDoItem.completed ? "completed" : "pending"}">
-      <button data-toggle="${toDoItem.timestamp}">
-        <img class="unchecked" src="./icons/square.svg" alt="unchecked" />
-        <img class="checked" src="./icons/check-square.svg" alt="checked" />
-        <span>${toDoItem.text}</span>
-      </button>
-      <div class="tools">
-        <button data-edit="${toDoItem.timestamp}">
-          <img src="./icons/pencil.svg" alt="edit" />
+  if (!toDoItem.editing) {
+    return `
+      <li class="${toDoItem.completed ? "completed" : "pending"}">
+        <button data-toggle="${toDoItem.timestamp}">
+          <img class="unchecked" src="./icons/square.svg" alt="unchecked" />
+          <img class="checked" src="./icons/check-square.svg" alt="checked" />
+          <span>${toDoItem.text}</span>
         </button>
-        <button data-delete="${toDoItem.timestamp}">
-          <img src="./icons/trash.svg" alt="delete" />
-        </button>
-      </div>
-    </li>
-  `;
+        <div class="tools">
+          <button data-edit="${toDoItem.timestamp}">
+            <img src="./icons/pencil.svg" alt="edit" />
+          </button>
+          <button data-delete="${toDoItem.timestamp}">
+            <img src="./icons/trash.svg" alt="delete" />
+          </button>
+        </div>
+      </li>
+    `;
+  } else {
+    return `
+      <li>
+        <input value="${toDoItem.text}" />
+        <div class="tools">
+          <button data-save="${toDoItem.timestamp}">
+            <img src="./icons/check.svg" alt="save" />
+          </button>
+          <button data-cancel="${toDoItem.timestamp}">
+            <img src="./icons/x.svg" alt="cancel" />
+          </button>
+        </div>
+      </li>
+    `;
+  }
 };
 const isCompleted = (toDoItem) => {
   return toDoItem.completed;
@@ -45,6 +61,7 @@ const addToDoItem = () => {
     timestamp: Date.now(),
     text: newToDoItemInput.value,
     completed: false,
+    editing: false,
   };
   toDoItems.push(newToDoItem);
   renderToDoItems();
@@ -72,6 +89,7 @@ toDoItemsList.addEventListener("click", (event) => {
             timestamp: toDoItem.timestamp,
             text: toDoItem.text,
             completed: !toDoItem.completed,
+            editing: toDoItem.editing,
           };
         } else {
           return toDoItem;
@@ -82,6 +100,21 @@ toDoItemsList.addEventListener("click", (event) => {
       const clickedDeleteTimestamp = Number(clickedButton.dataset.delete);
       toDoItems = toDoItems.filter((toDoItem) => {
         return toDoItem.timestamp !== clickedDeleteTimestamp;
+      });
+    }
+    if (clickedButton.dataset.edit) {
+      const clickedEditTimestamp = Number(clickedButton.dataset.edit);
+      toDoItems = toDoItems.map((toDoItem) => {
+        if (toDoItem.timestamp === clickedEditTimestamp) {
+          return {
+            timestamp: toDoItem.timestamp,
+            text: toDoItem.text,
+            completed: toDoItem.completed,
+            editing: true,
+          };
+        } else {
+          return toDoItem;
+        }
       });
     }
 

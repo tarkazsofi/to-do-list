@@ -13,9 +13,14 @@ const generateToDoHtml = (toDoItem) => {
         <img class="checked" src="./icons/check-square.svg" alt="checked" />
         <span>${toDoItem.text}</span>
       </button>
-      <button data-delete="${toDoItem.timestamp}">
-        <img src="./icons/trash.svg" alt="delete" />
-      </button>
+      <div class="tools">
+        <button data-edit="${toDoItem.timestamp}">
+          <img src="./icons/pencil.svg" alt="edit" />
+        </button>
+        <button data-delete="${toDoItem.timestamp}">
+          <img src="./icons/trash.svg" alt="delete" />
+        </button>
+      </div>
     </li>
   `;
 };

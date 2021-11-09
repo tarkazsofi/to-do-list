@@ -81,3 +81,7 @@ main {
 .new-to-do input {
   padding-inline: 8px;
 }
+.tools {
+  display: flex;
+  gap: 4px;
+}

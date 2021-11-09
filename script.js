@@ -117,6 +117,21 @@ toDoItemsList.addEventListener("click", (event) => {
         }
       });
     }
+    if (clickedButton.dataset.cancel) {
+      const clickedCancelTimestamp = Number(clickedButton.dataset.cancel);
+      toDoItems = toDoItems.map((toDoItem) => {
+        if (toDoItem.timestamp === clickedCancelTimestamp) {
+          return {
+            timestamp: toDoItem.timestamp,
+            text: toDoItem.text,
+            completed: toDoItem.completed,
+            editing: false,
+          };
+        } else {
+          return toDoItem;
+        }
+      });
+    }
 
     renderToDoItems();
   }

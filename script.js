@@ -1,4 +1,4 @@
-let toDoItems = [];
+let toDoItems = JSON.parse(localStorage.getItem("items")) || [];
 
 const toDoItemsContainer = document.querySelector(".to-do-items");
 const newToDoItemInput = document.querySelector(".new-to-do input");
@@ -76,6 +76,7 @@ const addToDoItem = () => {
     editing: false,
   };
   toDoItems.push(newToDoItem);
+  localStorage.setItem("items", JSON.stringify(toDoItems));
   renderToDoItems();
   newToDoItemInput.value = "";
 };
@@ -110,12 +111,14 @@ toDoItemsList.addEventListener("click", (event) => {
           return toDoItem;
         }
       });
+      localStorage.setItem("items", JSON.stringify(toDoItems));
     }
     if (clickedButton.dataset.delete) {
       const clickedDeleteTimestamp = Number(clickedButton.dataset.delete);
       toDoItems = toDoItems.filter((toDoItem) => {
         return toDoItem.timestamp !== clickedDeleteTimestamp;
       });
+      localStorage.setItem("items", JSON.stringify(toDoItems));
     }
     if (clickedButton.dataset.edit) {
       addToDoItemButton.disabled = true;
@@ -170,6 +173,7 @@ toDoItemsList.addEventListener("click", (event) => {
           return toDoItem;
         }
       });
+      localStorage.setItem("items", JSON.stringify(toDoItems));
     }
 
     renderToDoItems();

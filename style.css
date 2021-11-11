@@ -85,3 +85,6 @@ main {
   display: flex;
   gap: 4px;
 }
+button:disabled img {
+  opacity: 25%;
+}

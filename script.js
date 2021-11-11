@@ -119,6 +119,7 @@ toDoItemsList.addEventListener("click", (event) => {
     }
     if (clickedButton.dataset.edit) {
       addToDoItemButton.disabled = true;
+      newToDoItemInput.disabled = true;
       const clickedEditTimestamp = Number(clickedButton.dataset.edit);
       toDoItems = toDoItems.map((toDoItem) => {
         if (toDoItem.timestamp === clickedEditTimestamp) {
@@ -135,6 +136,7 @@ toDoItemsList.addEventListener("click", (event) => {
     }
     if (clickedButton.dataset.cancel) {
       addToDoItemButton.disabled = false;
+      newToDoItemInput.disabled = false;
       const clickedCancelTimestamp = Number(clickedButton.dataset.cancel);
       toDoItems = toDoItems.map((toDoItem) => {
         if (toDoItem.timestamp === clickedCancelTimestamp) {
@@ -151,6 +153,7 @@ toDoItemsList.addEventListener("click", (event) => {
     }
     if (clickedButton.dataset.save) {
       addToDoItemButton.disabled = false;
+      newToDoItemInput.disabled = false;
       const clickedSaveTimestamp = Number(clickedButton.dataset.save);
       const editingInput = document.querySelector(
         `input[data-input="${clickedSaveTimestamp}"]`

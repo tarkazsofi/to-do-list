@@ -6,19 +6,31 @@ const addToDoItemButton = document.querySelector(".new-to-do button");
 const toDoItemsList = document.querySelector(".to-do-items");
 
 const generateToDoHtml = (toDoItem) => {
+  const isSomethingEdited = toDoItems.some((toDoItem) => {
+    return toDoItem.editing;
+  });
   if (!toDoItem.editing) {
     return `
       <li class="${toDoItem.completed ? "completed" : "pending"}">
-        <button data-toggle="${toDoItem.timestamp}">
+        <button
+          data-toggle="${toDoItem.timestamp}"
+          ${isSomethingEdited ? "disabled" : ""}
+        >
           <img class="unchecked" src="./icons/square.svg" alt="unchecked" />
           <img class="checked" src="./icons/check-square.svg" alt="checked" />
           <span>${toDoItem.text}</span>
         </button>
         <div class="tools">
-          <button data-edit="${toDoItem.timestamp}">
+          <button
+            data-edit="${toDoItem.timestamp}" 
+            ${isSomethingEdited ? "disabled" : ""}
+          >
             <img src="./icons/pencil.svg" alt="edit" />
           </button>
-          <button data-delete="${toDoItem.timestamp}">
+          <button
+            data-delete="${toDoItem.timestamp}"
+            ${isSomethingEdited ? "disabled" : ""}
+          >
             <img src="./icons/trash.svg" alt="delete" />
           </button>
         </div>
@@ -72,7 +84,10 @@ renderToDoItems();
 
 addToDoItemButton.addEventListener("click", addToDoItem);
 newToDoItemInput.addEventListener("keyup", (event) => {
-  if (event.key === "Enter") {
+  const isSomethingEdited = toDoItems.some((toDoItem) => {
+    return toDoItem.editing;
+  });
+  if (event.key === "Enter" && !isSomethingEdited) {
     addToDoItem();
   }
 });
@@ -80,7 +95,7 @@ toDoItemsList.addEventListener("click", (event) => {
   const clickedButton = event.path.find(
     (element) => element.nodeName === "BUTTON"
   );
-  if (clickedButton !== undefined) {
+  if (clickedButton !== undefined && !clickedButton.disabled) {
     if (clickedButton.dataset.toggle) {
       const clickedToggleTimestamp = Number(clickedButton.dataset.toggle);
       toDoItems = toDoItems.map((toDoItem) => {
@@ -103,6 +118,7 @@ toDoItemsList.addEventListener("click", (event) => {
       });
     }
     if (clickedButton.dataset.edit) {
+      addToDoItemButton.disabled = true;
       const clickedEditTimestamp = Number(clickedButton.dataset.edit);
       toDoItems = toDoItems.map((toDoItem) => {
         if (toDoItem.timestamp === clickedEditTimestamp) {
@@ -118,6 +134,7 @@ toDoItemsList.addEventListener("click", (event) => {
       });
     }
     if (clickedButton.dataset.cancel) {
+      addToDoItemButton.disabled = false;
       const clickedCancelTimestamp = Number(clickedButton.dataset.cancel);
       toDoItems = toDoItems.map((toDoItem) => {
         if (toDoItem.timestamp === clickedCancelTimestamp) {
@@ -133,6 +150,7 @@ toDoItemsList.addEventListener("click", (event) => {
       });
     }
     if (clickedButton.dataset.save) {
+      addToDoItemButton.disabled = false;
       const clickedSaveTimestamp = Number(clickedButton.dataset.save);
       const editingInput = document.querySelector(
         `input[data-input="${clickedSaveTimestamp}"]`

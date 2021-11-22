@@ -13,7 +13,9 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 48px 1fr 32px;
+  touch-action: pan-x pan-y;
 }
+
 header,
 footer {
   display: flex;
@@ -37,7 +39,8 @@ footer {
   display: flex;
 }
 .main-inner-wrapper {
-  width: 480px;
+  width: 100%;
+  max-width: 480px;
 }
 main {
   display: flex;
@@ -87,4 +90,25 @@ main {
 }
 button:disabled img {
   opacity: 25%;
+}
+@media (max-width: 800px) {
+  body {
+    font-size: 20px;
+  }
+  button,
+  input {
+    font-size: inherit;
+  }
+  .new-to-do span {
+    display: none;
+  }
+  .new-to-do button {
+    background-color: transparent;
+  }
+  .new-to-do button img {
+    height: 48px;
+  }
+  .to-do-items li img {
+    height: 32px;
+  }
 }

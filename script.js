@@ -92,10 +92,10 @@ newToDoItemInput.addEventListener("keyup", (event) => {
     addToDoItem();
   }
 });
-toDoItemsList.addEventListener("click", (event) => {
-  const clickedButton = event.path.find(
-    (element) => element.nodeName === "BUTTON"
-  );
+const toDoItemListClickHandler = (event) => {
+  const clickedButton = event
+    .composedPath()
+    .find((element) => element.nodeName === "BUTTON");
   if (clickedButton !== undefined && !clickedButton.disabled) {
     if (clickedButton.dataset.toggle) {
       const clickedToggleTimestamp = Number(clickedButton.dataset.toggle);
@@ -178,4 +178,6 @@ toDoItemsList.addEventListener("click", (event) => {
 
     renderToDoItems();
   }
-});
+};
+toDoItemsList.addEventListener("click", toDoItemListClickHandler);
+toDoItemsList.addEventListener("touchstart", toDoItemListClickHandler);
